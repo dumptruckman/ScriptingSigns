@@ -1,0 +1,4 @@
+name: PluginTemplate
+main: com.dumptruckman.scriptingsigns.ScriptingSigns
+version: maven-version-number
+author: dumptruckman
