@@ -6,6 +6,8 @@ import com.dumptruckman.scriptingsigns.util.Logging;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Implementation of MVIConfig.
@@ -19,7 +21,7 @@ public class CommentedConfig implements Config {
         /**
          * Add a comment to the top of file.
          */
-        SETTINGS("settings", null, "# ===[ Multiverse Inventories Config ]==="),
+        SETTINGS("settings", null, "# ===[ ScriptingSigns Config ]==="),
         /**
          * Locale name config path, default and comments.
          */
@@ -27,12 +29,17 @@ public class CommentedConfig implements Config {
         /**
          * Debug Mode config path, default and comments.
          */
-        DEBUG_MODE("settings.debug_mode.enable", false, "# Enables debug mode."),
+        DEBUG_MODE("settings.debug_mode", false, "# Enables debug mode."),
         /**
          * First Run flag config path, default and comments.
          */
         FIRST_RUN("settings.first_run", true, "# If this is true it will generate world groups for you based on MV "
-                + "worlds.");
+                + "worlds."),
+        /**
+         * Sign creation phrases
+         */
+        SIGN_STRING("settings.sign_strings", Arrays.asList("[script]"), "# These are the phrases that will create"
+                + " a scripting sign.");
 
         private String path;
         private Object def;
@@ -180,5 +187,13 @@ public class CommentedConfig implements Config {
     @Override
     public void setFirstRun(boolean firstRun) {
         this.getConfig().set(Path.FIRST_RUN.getPath(), firstRun);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<String> getSignCreationPhrases() {
+        return this.getConfig().getStringList(Path.SIGN_STRING.getPath());
     }
 }

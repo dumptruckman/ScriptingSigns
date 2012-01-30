@@ -7,13 +7,14 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
- * Permission Enum for easily keeping track of permissions related to this plugin.
+ * Permission Enum for easily keeping track of permissions related to
+ * this plugin.
  */
 public enum Perm {
     /**
      * Permission for /mvi info.
      */
-    EXAMPLE(new Permission("example.node", "Example description",
+    CAN_CREATE(new Permission("scriptingsigns.create", "Allows for creation of a ScriptingSign",
             PermissionDefault.OP));
 
     private Permission perm = null;

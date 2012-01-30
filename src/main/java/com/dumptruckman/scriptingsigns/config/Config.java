@@ -2,6 +2,8 @@ package com.dumptruckman.scriptingsigns.config;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.util.List;
+
 /**
  * Interface for interacting with the config of this plugin.
  */
@@ -46,4 +48,9 @@ public interface Config {
      * @param firstRun What to set the flag to in the config.
      */
     void setFirstRun(boolean firstRun);
+
+    /**
+     * @return A list of the different strings usable to create scripting signs.
+     */
+    List<String> getSignCreationPhrases();
 }
