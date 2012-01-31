@@ -46,7 +46,7 @@ and adjust the build number accordingly -->
     </profiles>
 
     <build>
-        <defaultGoal>clean package</defaultGoal>
+        <defaultGoal>clean install</defaultGoal>
         <plugins>
             <!-- Compiler -->
             <plugin>
@@ -69,26 +69,6 @@ and adjust the build number accordingly -->
                         </manifestEntries>
                     </archive>
                 </configuration>
-            </plugin>
-            <!-- Build Helper - Additional Source Folders -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.7</version>
-                <executions>
-                    <execution>
-                        <id>add-wsdl-source</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>${project.basedir}/lib/ActionMenu2/src/main/java</source>
-                            </sources>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>com.google.code.maven-replacer-plugin</groupId>
@@ -147,6 +127,26 @@ and adjust the build number accordingly -->
                     <configLocation>${project.basedir}/config/checks.xml</configLocation>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <artifactSet>
+                                <includes>
+                                    <include>com.dumptruckman:ActionMenu2</include>
+                                </includes>
+                            </artifactSet>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <dependencies>
@@ -159,6 +159,13 @@ and adjust the build number accordingly -->
             <scope>compile</scope>
         </dependency>
         <!-- Bukkit Dependency -->
+        <dependency>
+            <groupId>com.dumptruckman</groupId>
+            <artifactId>ActionMenu2</artifactId>
+            <version>dev-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <!--<distributionManagement>
