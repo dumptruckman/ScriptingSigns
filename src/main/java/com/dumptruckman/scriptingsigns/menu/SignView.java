@@ -13,6 +13,29 @@ public class SignView extends AbstractSignView {
     
     @Override
     public void show(Player player) {
-        
+        if (this.getMenu() == null) {
+            return;
+        }
+        System.out.println("showing menu");
+        Sign sign = this.getSign();
+        for(int i = 0; i < this.getMenu().getContents().size() && i < 4; i++) {
+            String text = this.getMenu().getContents().get(i).getText();
+            System.out.println("showing item: " + text);
+            if (this.getMenu().getContents().get(i).isSelectable()) {
+                if (this.getMenu().getContents().getSelectedIndex() == i) {
+                    text = "> " + text;
+                } else {
+                    text = "  " + text;
+                }
+            }
+            StringBuilder builder = new StringBuilder();
+            builder.append(text);
+            for (int j = text.length(); j <= 15; j++) {
+                builder.append(" ");
+            }
+            text = builder.toString();
+            sign.setLine(i, text);
+        }
+        sign.update(true);
     }
 }
