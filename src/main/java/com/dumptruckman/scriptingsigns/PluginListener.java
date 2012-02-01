@@ -1,6 +1,9 @@
 package com.dumptruckman.scriptingsigns;
 
 import com.dumptruckman.scriptingsigns.permission.Perm;
+import com.dumptruckman.scriptingsigns.sign.ScriptSign;
+import com.dumptruckman.scriptingsigns.sign.Signs;
+import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
@@ -36,6 +39,7 @@ public class PluginListener implements Listener {
         if (!found) {
             return;
         }
-
+        ScriptSign scriptSign = this.plugin.getSigns().newSign(
+                (Sign) event.getBlock().getState(), event.getPlayer());
     }
 }

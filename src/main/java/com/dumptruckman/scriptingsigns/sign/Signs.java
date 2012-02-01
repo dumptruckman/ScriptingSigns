@@ -3,22 +3,35 @@ package com.dumptruckman.scriptingsigns.sign;
 import com.dumptruckman.actionmenu2.api.MenuHandle;
 import com.dumptruckman.actionmenu2.impl.Menus;
 import com.dumptruckman.scriptingsigns.menu.SignView;
+import com.dumptruckman.scriptingsigns.sign.DefaultScriptSign;
+import com.dumptruckman.scriptingsigns.sign.ScriptSign;
+import com.dumptruckman.scriptingsigns.util.BlockLocation;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Signs {
 
-    private Signs() { }
+    private Plugin plugin;
     
-    public static ScriptingSign newSign(Plugin plugin, Sign sign, Player owner) {
-        MenuHandle handle = Menus.newMenuHandle(plugin, Menus.newMenu(plugin));
-        handle.addView(new SignView(plugin, sign));
-        return new DefaultScriptingSign(sign, owner, handle);
+    private Map<BlockLocation, ScriptSign> blockScriptSignMap = new HashMap<BlockLocation, ScriptSign>();
+
+    public Signs(Plugin plugin) {
+        this.plugin = plugin;
     }
     
-    public static ScriptingSign getSign(Block block) {
-        return null;
+    public ScriptSign newSign(Sign sign, Player owner) {
+        MenuHandle handle = Menus.newMenuHandle(this.plugin, sign, SignView.class);
+        ScriptSign scriptSign = new DefaultScriptSign(sign, owner, handle);
+        this.blockScriptSignMap.put(BlockLocation.get(sign.getBlock()), scriptSign);
+        return scriptSign;
+    }
+    
+    public ScriptSign getSign(Block block) {
+        return this.blockScriptSignMap.get(BlockLocation.get(block));
     }
 }

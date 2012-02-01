@@ -8,6 +8,7 @@ import com.dumptruckman.scriptingsigns.locale.Messager;
 import com.dumptruckman.scriptingsigns.locale.Messaging;
 import com.dumptruckman.scriptingsigns.locale.SimpleMessager;
 import com.dumptruckman.scriptingsigns.permission.Perm;
+import com.dumptruckman.scriptingsigns.sign.Signs;
 import com.dumptruckman.scriptingsigns.util.Logging;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -23,6 +24,7 @@ public class ScriptingSigns extends JavaPlugin implements Messaging {
     private Config config = null;
     private Data data = null;
     private Messager messager = new SimpleMessager(this);
+    private Signs signs = null;
 
     /**
      * {@inheritDoc}
@@ -117,6 +119,13 @@ public class ScriptingSigns extends JavaPlugin implements Messaging {
             }
         }
         return this.data;
+    }
+    
+    public Signs getSigns() {
+        if (this.signs == null) {
+            this.signs = new Signs(this);
+        }
+        return this.signs;
     }
 
     /**
