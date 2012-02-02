@@ -1,13 +1,12 @@
 package com.dumptruckman.scriptingsigns.menu;
 
 import com.dumptruckman.actionmenu2.api.Menu;
-import com.dumptruckman.actionmenu2.api.MenuHandle;
 import com.dumptruckman.actionmenu2.api.event.MenuItemEvent;
 import com.dumptruckman.actionmenu2.api.event.MenuItemListener;
 
 public class ViewEditListener implements MenuItemListener {
     
-    private MenuHandle menuHandle;
+    private Menu menuHandle;
     private Menu viewEditMenu;
     
     public ViewEditListener(MenuHandle menuHandle, Menu viewEditMenu) {

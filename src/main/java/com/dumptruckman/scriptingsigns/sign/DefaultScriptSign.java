@@ -88,8 +88,8 @@ public class DefaultScriptSign implements ScriptSign {
     }
 
     @Override
-    public void cycleMenu(Boolean aBoolean) {
-        getMenuHandle().cycleMenu(aBoolean);
+    public void cycleMenu(boolean reverse) {
+        getMenuHandle().cycleMenu(reverse);
     }
 
     @Override
@@ -108,7 +108,7 @@ public class DefaultScriptSign implements ScriptSign {
     }
 
     @Override
-    public MenuContents<MenuItem> getContents() {
+    public MenuContents getContents() {
         return getMenuHandle().getContents();
     }
 
