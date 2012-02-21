@@ -1,16 +1,13 @@
 package com.dumptruckman.scriptingsigns.sign;
 
 import com.dumptruckman.actionmenu2.api.Menu;
-import com.dumptruckman.actionmenu2.api.MenuHandle;
 import com.dumptruckman.actionmenu2.api.MenuItem;
-import com.dumptruckman.actionmenu2.api.event.MenuItemListener;
+import com.dumptruckman.actionmenu2.api.MenuView;
 import com.dumptruckman.actionmenu2.impl.Menus;
 import com.dumptruckman.actionmenu2.impl.SimpleMenuItem;
 import com.dumptruckman.scriptingsigns.menu.SaveExitListener;
 import com.dumptruckman.scriptingsigns.menu.SignView;
 import com.dumptruckman.scriptingsigns.menu.ViewEditListener;
-import com.dumptruckman.scriptingsigns.sign.DefaultScriptSign;
-import com.dumptruckman.scriptingsigns.sign.ScriptSign;
 import com.dumptruckman.scriptingsigns.util.BlockLocation;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -31,10 +28,11 @@ public class Signs {
     }
     
     public ScriptSign newSign(Sign sign, Player owner) {
-        MenuHandle handle = Menus.newMenuHandle(this.plugin);
-        handle.addView(new SignView(this.plugin, sign));
+        Menu handle = Menus.newMenu(this.plugin);
+        SignView view = new SignView(this.plugin, sign);
+        handle.getViews().add(view);
         ScriptSign scriptSign = new DefaultScriptSign(sign, owner, handle);
-        setupMainMenu(scriptSign);
+        setupMainMenu(scriptSign, view);
         this.blockScriptSignMap.put(BlockLocation.get(sign.getBlock()), scriptSign);
         return scriptSign;
     }
@@ -43,34 +41,48 @@ public class Signs {
         return this.blockScriptSignMap.get(BlockLocation.get(block));
     }
     
-    private void setupMainMenu(MenuHandle menuHandle) {
-        MenuItem item = new SimpleMenuItem(this.plugin);
+    private void setupMainMenu(Menu menuHandle, SignView view) {
+        menuHandle.getModel().getMenuContentsListeners().add(view);
+        MenuItem item = new SimpleMenuItem();
         item.setText("Scripting Sign");
         item.setSelectable(false);
-        menuHandle.getContents().add(item);
-        item = new SimpleMenuItem(this.plugin);
+        menuHandle.getModel().add(item);
+        item = new SimpleMenuItem();
         item.setText("View/Edit");
         item.getMenuItemListeners().add(
                 new ViewEditListener(menuHandle,
-                        this.newViewEditMenu(menuHandle)));
-        menuHandle.getContents().add(item);
+                        this.newViewEditMenu(menuHandle, view)));
+        menuHandle.getModel().add(item);
     }
 
-    private Menu newViewEditMenu(MenuHandle menuHandle) {
+    private Menu newViewEditMenu(Menu menuHandle, SignView view) {
         Menu menu = Menus.newMenu(this.plugin);
-        MenuItem item = new SimpleMenuItem(this.plugin);
+        menu.getModel().getMenuContentsListeners().add(view);
+        MenuItem item = new SimpleMenuItem();
         item.setText("Edit Script:");
         item.setSelectable(false);
-        menu.getContents().add(item);
-        item = new SimpleMenuItem(this.plugin);
-        item.setText("<new line>");
+        menu.getModel().add(item);
+        item = new SimpleMenuItem();
+        item.setText("<new line 1>");
         // Add listener
-        menu.getContents().add(item);
-        item = new SimpleMenuItem(this.plugin);
+        menu.getModel().add(item);
+        item = new SimpleMenuItem();
+        item.setText("<new line 2>");
+        // Add listener
+        menu.getModel().add(item);
+        item = new SimpleMenuItem();
+        item.setText("<new line 3>");
+        // Add listener
+        menu.getModel().add(item);
+        item = new SimpleMenuItem();
+        item.setText("<new line 4>");
+        // Add listener
+        menu.getModel().add(item);
+        item = new SimpleMenuItem();
         item.setText("<save and exit>");
         item.getMenuItemListeners().add(
-                new SaveExitListener(menuHandle, menuHandle.getMenu()));
-        menu.getContents().add(item);
+                new SaveExitListener(menu, menuHandle));
+        menu.getModel().add(item);
         return menu;
     }
 }

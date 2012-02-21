@@ -9,14 +9,14 @@ public class ViewEditListener implements MenuItemListener {
     private Menu menuHandle;
     private Menu viewEditMenu;
     
-    public ViewEditListener(MenuHandle menuHandle, Menu viewEditMenu) {
+    public ViewEditListener(Menu menuHandle, Menu viewEditMenu) {
         this.menuHandle = menuHandle;
         this.viewEditMenu = viewEditMenu;
     }
 
     @Override
     public void onAction(MenuItemEvent menuItemEvent) {
-        this.menuHandle.setMenu(this.viewEditMenu);
+        this.menuHandle.setModel(this.viewEditMenu.getModel());
     }
 
     @Override

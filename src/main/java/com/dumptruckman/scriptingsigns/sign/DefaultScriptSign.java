@@ -1,30 +1,25 @@
 package com.dumptruckman.scriptingsigns.sign;
 
 import com.dumptruckman.actionmenu2.api.Menu;
-import com.dumptruckman.actionmenu2.api.MenuContents;
-import com.dumptruckman.actionmenu2.api.MenuHandle;
 import com.dumptruckman.actionmenu2.api.MenuItem;
-import com.dumptruckman.actionmenu2.api.MenuView;
-import com.dumptruckman.actionmenu2.api.event.MenuListener;
+import com.dumptruckman.actionmenu2.api.MenuModel;
+import com.dumptruckman.actionmenu2.api.MenuViews;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
-
-import java.util.Set;
 
 public class DefaultScriptSign implements ScriptSign {
 
     private Block block;
     private Sign sign;
     private Player owner;
-    private MenuHandle menuHandle;
+    private Menu menu;
     
-    protected DefaultScriptSign(Sign sign, Player owner, MenuHandle menuHandle) {
+    protected DefaultScriptSign(Sign sign, Player owner, Menu menu) {
         this.block = sign.getBlock();
         this.sign = sign;
         this.owner = owner;
-        this.menuHandle = menuHandle;
+        this.menu = menu;
     }
 
     @Override
@@ -38,97 +33,52 @@ public class DefaultScriptSign implements ScriptSign {
     }
 
     @Override
-    public Player getOwner() {
-        return owner;
+    public MenuModel getModel() {
+        return menu.getModel();
     }
 
     @Override
-    public final MenuHandle getMenuHandle() {
-        return menuHandle;
-    }
-
-    @Override
-    public void touch(Player player) {
-        this.getMenuHandle().touch(player);
-    }
-
-    @Override
-    public Player getPlayer() {
-        return this.getMenuHandle().getPlayer();
-    }
-
-    @Override
-    public Plugin getPlugin() {
-        return this.getMenuHandle().getPlugin();
-    }
-
-    @Override
-    public void show(Player player) {
-        this.getMenuHandle().show(player);
-    }
-
-    @Override
-    public void setMenu(Menu menu) {
-        this.getMenuHandle().setMenu(menu);
-    }
-
-    @Override
-    public Menu getMenu() {
-        return this.getMenuHandle().getMenu();
-    }
-
-    @Override
-    public void updateViews(Player player) {
-        this.getMenuHandle().updateViews(player);
-    }
-
-    @Override
-    public void cycleMenu() {
-        getMenuHandle().cycleMenu();
-    }
-
-    @Override
-    public void cycleMenu(boolean reverse) {
-        getMenuHandle().cycleMenu(reverse);
-    }
-
-    @Override
-    public Set<MenuView> getViews() {
-        return getMenuHandle().getViews();
-    }
-
-    @Override
-    public boolean addView(MenuView menuView) {
-        return getMenuHandle().addView(menuView);
-    }
-
-    @Override
-    public boolean removeView(MenuView menuView) {
-        return getMenuHandle().removeView(menuView);
-    }
-
-    @Override
-    public MenuContents getContents() {
-        return getMenuHandle().getContents();
+    public void setModel(MenuModel menuItems) {
+        menu.setModel(menuItems);
     }
 
     @Override
     public MenuItem getSelected() {
-        return getMenuHandle().getSelected();
+        return menu.getSelected();
     }
 
     @Override
-    public Set<MenuListener> getMenuListeners() {
-        return getMenuHandle().getMenuListeners();
+    public void cycleSelection() {
+        menu.cycleSelection();
     }
 
     @Override
-    public void run(MenuItem menuItem) {
-        getMenuHandle().run(menuItem);
+    public void cycleSelection(boolean b) {
+        menu.cycleSelection(b);
     }
 
     @Override
-    public void runSelected() {
-        getMenuHandle().runSelected();
+    public MenuViews getViews() {
+        return menu.getViews();
+    }
+
+    @Override
+    public void setUser(Player player) {
+        menu.setUser(player);
+    }
+
+    @Override
+    public Player getUser() {
+        return menu.getUser();
+    }
+
+    @Override
+    public void updateViews() {
+        menu.updateViews();
+    }
+
+    @Override
+    public Player getOwner() {
+        return this.owner;
     }
 }

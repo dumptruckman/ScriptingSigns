@@ -38,14 +38,13 @@ public class PluginListener implements Listener {
             System.out.println("Not scriptsign");
             return;
         }
-        sign.touch(event.getPlayer());
+        sign.setUser(event.getPlayer());
         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            sign.cycleMenu();
+            sign.cycleSelection();
         } else if (event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
-            sign.runSelected();
+            sign.getSelected().run();
         }
-        sign.updateViews(event.getPlayer());
-        sign.show(event.getPlayer());
+        sign.updateViews();
     }
 
     @EventHandler
@@ -70,8 +69,8 @@ public class PluginListener implements Listener {
         }
         ScriptSign scriptSign = this.plugin.getSigns().newSign(
                 (Sign) event.getBlock().getState(), event.getPlayer());
-        scriptSign.touch(event.getPlayer());
-        scriptSign.updateViews(event.getPlayer());
+        scriptSign.setUser(event.getPlayer());
+        scriptSign.updateViews();
         System.out.println("made sign");
     }
 }
