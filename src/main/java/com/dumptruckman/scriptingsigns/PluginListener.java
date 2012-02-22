@@ -2,8 +2,6 @@ package com.dumptruckman.scriptingsigns;
 
 import com.dumptruckman.scriptingsigns.permission.Perm;
 import com.dumptruckman.scriptingsigns.sign.ScriptSign;
-import com.dumptruckman.scriptingsigns.sign.Signs;
-import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -40,7 +38,11 @@ public class PluginListener implements Listener {
         }
         sign.setUser(event.getPlayer());
         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            sign.cycleSelection();
+            if (event.getPlayer().isSneaking()) {
+                sign.cycleSelection(true);
+            } else {
+                sign.cycleSelection();
+            }
         } else if (event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
             sign.getSelected().run();
         }

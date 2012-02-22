@@ -42,7 +42,6 @@ public class Signs {
     }
     
     private void setupMainMenu(Menu menuHandle, SignView view) {
-        menuHandle.getModel().getMenuContentsListeners().add(view);
         MenuItem item = new SimpleMenuItem();
         item.setText("Scripting Sign");
         item.setSelectable(false);
@@ -53,11 +52,14 @@ public class Signs {
                 new ViewEditListener(menuHandle,
                         this.newViewEditMenu(menuHandle, view)));
         menuHandle.getModel().add(item);
+        item = new SimpleMenuItem();
+        item.setText("really big big big long text line");
+        // Add listener
+        menuHandle.getModel().add(item);
     }
 
     private Menu newViewEditMenu(Menu menuHandle, SignView view) {
         Menu menu = Menus.newMenu(this.plugin);
-        menu.getModel().getMenuContentsListeners().add(view);
         MenuItem item = new SimpleMenuItem();
         item.setText("Edit Script:");
         item.setSelectable(false);
@@ -75,7 +77,7 @@ public class Signs {
         // Add listener
         menu.getModel().add(item);
         item = new SimpleMenuItem();
-        item.setText("<new line 4>");
+        item.setText("<new line 4 extra long test>");
         // Add listener
         menu.getModel().add(item);
         item = new SimpleMenuItem();
