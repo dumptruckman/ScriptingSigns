@@ -24,16 +24,13 @@ public class PluginListener implements Listener {
     public void playerInteract(PlayerInteractEvent event) {
         if (!(event.getAction().equals(Action.RIGHT_CLICK_BLOCK)
                 || event.getAction().equals(Action.LEFT_CLICK_BLOCK))) {
-            System.out.println("Not block");
             return;
         }
         if (!(event.getClickedBlock().getState() instanceof Sign)) {
-            System.out.println("Not sign");
             return;
         }
         ScriptSign sign = this.plugin.getSigns().getSign(event.getClickedBlock());
         if (sign == null) {
-            System.out.println("Not scriptsign");
             return;
         }
         sign.setUser(event.getPlayer());
@@ -45,6 +42,7 @@ public class PluginListener implements Listener {
             }
         } else if (event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
             sign.getSelected().run();
+            System.out.println(sign);
         }
         sign.updateViews();
     }

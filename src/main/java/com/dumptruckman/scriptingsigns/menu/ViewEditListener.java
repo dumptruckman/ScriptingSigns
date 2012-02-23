@@ -1,22 +1,24 @@
 package com.dumptruckman.scriptingsigns.menu;
 
 import com.dumptruckman.actionmenu2.api.Menu;
+import com.dumptruckman.actionmenu2.api.MenuModel;
 import com.dumptruckman.actionmenu2.api.event.MenuItemEvent;
 import com.dumptruckman.actionmenu2.api.event.MenuItemListener;
+import com.dumptruckman.scriptingsigns.sign.ScriptSign;
 
 public class ViewEditListener implements MenuItemListener {
     
-    private Menu menuHandle;
-    private Menu viewEditMenu;
+    private Menu scriptSign;
+    private MenuModel viewEditMenu;
     
-    public ViewEditListener(Menu menuHandle, Menu viewEditMenu) {
-        this.menuHandle = menuHandle;
+    public ViewEditListener(ScriptSign scriptSign, MenuModel viewEditMenu) {
+        this.scriptSign = scriptSign;
         this.viewEditMenu = viewEditMenu;
     }
 
     @Override
     public void onAction(MenuItemEvent menuItemEvent) {
-        this.menuHandle.setModel(this.viewEditMenu.getModel());
+        this.scriptSign.setModel(this.viewEditMenu);
     }
 
     @Override

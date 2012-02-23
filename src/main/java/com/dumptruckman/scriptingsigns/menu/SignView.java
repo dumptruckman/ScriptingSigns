@@ -4,6 +4,7 @@ import com.dumptruckman.actionmenu2.api.AbstractSignView;
 import com.dumptruckman.actionmenu2.api.Menu;
 import com.dumptruckman.actionmenu2.api.MenuModel;
 import com.dumptruckman.actionmenu2.api.event.MenuEvent;
+import com.dumptruckman.actionmenu2.api.event.ModelChangeEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
@@ -83,8 +84,8 @@ public class SignView extends AbstractSignView {
     public void onSelectionChange(MenuEvent event) {
         this.selectedTextIndex = 0;
         this.ticker.stop();
+        int menuSize = event.getModel().size();
         if (event.getIndex1() > event.getIndex0()) {
-            int menuSize = event.getModel().size();
             if (event.getIndex1() >= menuSize - 1) {
                 this.leadIndex = menuSize - SIGN_LINES;
             } else {
@@ -94,12 +95,20 @@ public class SignView extends AbstractSignView {
             if (event.getIndex1() <= 0) {
                 this.leadIndex = 0;
             } else {
-                this.leadIndex = event.getIndex1() - 1;
+                int changeDiff = event.getIndex0() - event.getIndex1();
+                if (!(changeDiff == 1 && event.getIndex0() == menuSize - 1)) {
+                    this.leadIndex = event.getIndex1() - 1;
+                }
             }
         }
         if (this.leadIndex < 0) {
             this.leadIndex = 0;
         }
+    }
+
+    @Override
+    public void onModelChange(ModelChangeEvent event) {
+        SignView.this.leadIndex = 0;
     }
 
     private class TickerTask implements Runnable {

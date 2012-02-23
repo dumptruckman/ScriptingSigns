@@ -1,22 +1,24 @@
 package com.dumptruckman.scriptingsigns.menu;
 
 import com.dumptruckman.actionmenu2.api.Menu;
+import com.dumptruckman.actionmenu2.api.MenuModel;
 import com.dumptruckman.actionmenu2.api.event.MenuItemEvent;
 import com.dumptruckman.actionmenu2.api.event.MenuItemListener;
+import com.dumptruckman.scriptingsigns.sign.ScriptSign;
 
 public class SaveExitListener implements MenuItemListener {
 
-    private Menu menuHandle;
-    private Menu mainMenu;
+    private ScriptSign scriptSign;
+    private MenuModel mainMenu;
 
-    public SaveExitListener(Menu menuHandle, Menu mainMenu) {
-        this.menuHandle = menuHandle;
+    public SaveExitListener(ScriptSign scriptSign, MenuModel mainMenu) {
+        this.scriptSign = scriptSign;
         this.mainMenu = mainMenu;
     }
 
     @Override
     public void onAction(MenuItemEvent menuItemEvent) {
-        this.menuHandle.setModel(this.mainMenu.getModel());
+        this.scriptSign.setModel(this.mainMenu);
     }
 
     @Override
